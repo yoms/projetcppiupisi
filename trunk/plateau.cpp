@@ -1,3 +1,4 @@
+#include <iostream>
 #include "plateau.h"
 #define NB_FEU 3
 
@@ -51,3 +52,18 @@ Element* Plateau::getElement(int x, int y)
 {
     return &this->grille[x][y];
 }
+bool Plateau::deplacer( Agent* agent, int x, int y )
+{
+
+    if( x + agent->getPosX() < this->nbLigne &&
+        y + agent->getPosY() < this->nbColone)
+    {
+        this->grille[agent->getPosX()][agent->getPosY()].delAgent();
+        this->grille[agent->getPosX() + x][agent->getPosY() + y].setAgent(agent);
+        return true;
+    }
+    return false;
+
+}
+
+bool deplacer( Feu* );

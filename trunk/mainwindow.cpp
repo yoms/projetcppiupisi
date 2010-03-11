@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->plateau = new Plateau;
+    this->plateau = new Plateau(25, 25);
     this->element = new QLabel*[plateau->getNBLigne()];
     for(int i = 0; i < plateau->getNBLigne(); i++)
     {
@@ -51,5 +52,7 @@ void MainWindow::setGrille()
 {
     for(int i = 0; i < this->plateau->getNBLigne(); i++)
         for(int j = 0; j < this->plateau->getNBColone(); j++)
+        {
             this->element[i][j].setText(this->plateau->getElement(i,j)->getContenue());
+        }
 }

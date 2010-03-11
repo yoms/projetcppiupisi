@@ -16,6 +16,7 @@ bool Element::setAgent(Agent* agent)
     if(agent != NULL && this->agent == NULL)
     {
         this->agent = agent;
+        this->agent->lier(this);
         return true;
     }
     return false;
