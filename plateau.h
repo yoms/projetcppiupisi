@@ -23,7 +23,8 @@ public:
     Plateau(int x = 7, int y = 9);
     ~Plateau();
     void jouer();
-    bool deplacer(int x, int y);
+    bool deplacer( Agent*, int x, int y );
+    bool deplacer( Feu* );
     
     Element* getElement(int x, int y);
     Element** getGrille() const {return this->grille;}
