@@ -24,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    for(int i = 0; i < this->plateau->getNBLigne(); i++)
+        delete[] this->element[i];
+    delete[] this->element;
     delete ui;
 }
 

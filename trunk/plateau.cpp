@@ -12,15 +12,24 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
     {
         this->grille[i] = new Element[this->nbColone];
     }
-
+    for(int i = 0; i < this->nbLigne; i++)
+        for(int j = 0; j < this->nbColone; j++)
+        {
+            this->grille[i][j].setX(i);
+            this->grille[i][j].setY(j);
+        }
     for(int i = 0; i < 3; i++)
     {
         this->listAgent.append(Agent(this));
     }
+    this->grille[0][0].setAgent(&this->listAgent[0]);
+    this->grille[0][1].setAgent(&this->listAgent[1]);
+    this->grille[0][2].setAgent(&this->listAgent[2]);
     for(int i = 0; i < NB_FEU; i++)
     {
         this->listFeu.append(Feu(this));
     }
+    this->grille[0][0].setFeu(this);
 
 }
 

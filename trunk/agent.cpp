@@ -7,3 +7,12 @@ void Agent::jouer()
 {
 
 }
+
+int Agent::getPosX()
+{
+    return this->element->getX();
+}
+int Agent::getPosY()
+{
+    return this->element->getY();
+}
