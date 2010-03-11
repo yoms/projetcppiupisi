@@ -38,3 +38,7 @@ void Plateau::jouer()
     for(int i = 0; i < this->listAgent.size(); i++)
         listAgent[i].jouer();
 }
+Element* Plateau::getElement(int x, int y)
+{
+    return &this->grille[x][y];
+}

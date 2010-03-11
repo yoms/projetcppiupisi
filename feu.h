@@ -8,7 +8,7 @@ class Feu
 private:
     Plateau* plateau;
 public:
-    Feu(const Plateau* plateau);
+    Feu(Plateau* plateau);
     void jouer();
     char* className(){ return "Feu";}
 };

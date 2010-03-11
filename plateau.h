@@ -25,7 +25,7 @@ public:
     void jouer();
     bool deplacer(int x, int y);
     
-    Element getElement(int x, int y){ return this->grille[x][y]; }
+    Element* getElement(int x, int y);
     Element** getGrille() const {return this->grille;}
     int getNBLigne(){return this->nbLigne;}
     int getNBColone(){return this->nbColone;}

@@ -1,6 +1,6 @@
 #include "agent.h"
 
-Agent::Agent()
+Agent::Agent(Plateau *plateau):plateau(plateau)
 {
 }
 void Agent::jouer()
