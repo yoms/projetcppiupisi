@@ -48,5 +48,5 @@ void MainWindow::setGrille()
 {
     for(int i = 0; i < this->plateau->getNBLigne(); i++)
         for(int j = 0; j < this->plateau->getNBColone(); j++)
-            this->element[i][j].setText(this->plateau->getElement(i,j));
+            this->element[i][j].setText(this->plateau->getElement(i,j)->getContenue());
 }
