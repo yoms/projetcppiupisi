@@ -19,3 +19,8 @@ HEADERS += plateau.h \
     feu.h \
     mainwindow.h
 FORMS += mainwindow.ui
+OTHER_FILES += media/pompier.jpg \
+    media/personne.png \
+    media/feu.png \
+    media/avion.gif \
+    media/antenne.jpg

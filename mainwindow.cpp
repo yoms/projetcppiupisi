@@ -1,13 +1,19 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
+#define IMAGE_FEU "./media/feu.png"
+#define IMAGE_ANTENNE "./media/antenne.jpg"
+#define IMAGE_AVION "./media/avion.gif"
+#define IMAGE_PERSONNE "./media/personne.png"
+#define IMAGE_POMPIER "./media/pompier.jpg"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->plateau = new Plateau(25, 25);
+    this->plateau = new Plateau;
     this->element = new QLabel*[plateau->getNBLigne()];
     for(int i = 0; i < plateau->getNBLigne(); i++)
     {
@@ -17,9 +23,13 @@ MainWindow::MainWindow(QWidget *parent) :
         for(int j = 0; j < this->plateau->getNBColone(); j++)
         {
             this->ui->gridLayout->addWidget(&this->element[i][j], i, j);
-            this->element[i][j].setText("coucou");
+            this->element[i][j].resize(50,50);
+            this->element[i][j].setMaximumSize(50,50);
+            this->element[i][j].setMinimumSize(50,50);
         }
+    this->setGrille();
     connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(jouer()));
+    
 
 }
 
@@ -34,7 +44,7 @@ MainWindow::~MainWindow()
 void MainWindow::jouer()
 {
     this->plateau->jouer();
-    setGrille();
+    this->setGrille();
 }
 
 void MainWindow::changeEvent(QEvent *e)
@@ -53,6 +63,14 @@ void MainWindow::setGrille()
     for(int i = 0; i < this->plateau->getNBLigne(); i++)
         for(int j = 0; j < this->plateau->getNBColone(); j++)
         {
-            this->element[i][j].setText(this->plateau->getElement(i,j)->getContenue());
+            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Feu"))
+            {
+                this->element[i][j].setPixmap(QPixmap(IMAGE_FEU));
+            }
+            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Agent"))
+            {
+                this->element[i][j].setPixmap(QPixmap(IMAGE_POMPIER));
+            }
+            else this->element[i][j].setText("");
         }
 }
