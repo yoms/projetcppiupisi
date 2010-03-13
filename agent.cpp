@@ -13,3 +13,7 @@ int Agent::getPosY()
 {
     return this->element->getY();
 }
+void Agent::delAgent()
+{
+    this->plateau->supElement(this);
+}

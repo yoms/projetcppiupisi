@@ -18,3 +18,7 @@ int Feu::getPosY()
 {
     return this->element->getY();
 }
+void Feu::delFeu()
+{
+    this->plateau->supElement(this);
+}

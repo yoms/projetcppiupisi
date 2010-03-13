@@ -1,6 +1,7 @@
 #ifndef AGENT_H
 #define AGENT_H
 class Agent;
+
 #include "plateau.h"
 #include "element.h"
 class Agent
@@ -15,7 +16,7 @@ public:
     int getPosX();
     int getPosY();
     virtual char* className(){return "Agent";}
-    virtual void delAgent(){}
+    virtual void delAgent();
 };
 
 #endif // AGENT_H

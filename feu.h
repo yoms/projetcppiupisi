@@ -15,7 +15,8 @@ public:
     void lier(Element* element){this->element = element;}
     int getPosX();
     int getPosY();
-    char* className(){ return "Feu";}
+    char* className(){ return "Feu";}   
+    void delFeu();
 };
 
 #endif // FEU_H

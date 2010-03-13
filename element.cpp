@@ -16,8 +16,12 @@ bool Element::setAgent(Agent* agent)
 {
     if(agent != NULL && this->agent == NULL && this->feu == NULL)
     {
+        if(this->feu != NULL)
+        {            
+            agent->delAgent();
+        }
         this->agent = agent;
-        this->agent->lier(this);
+        this->agent->lier(this);        
         return true;
     }
     return false;
