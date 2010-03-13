@@ -6,7 +6,7 @@
 #define IMAGE_DRONE "./media/avion.gif"
 #define IMAGE_VICTIME "./media/personne.png"
 #define IMAGE_POMPIER "./media/pompier.jpg"
-#define IMAGE_ROBOT "./media/robot.jpg"
+#define IMAGE_ROBOT "./media/robot.png"
 
 
 MainWindow::MainWindow(QWidget *parent) :
