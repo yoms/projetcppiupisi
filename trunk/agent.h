@@ -5,7 +5,7 @@ class Agent;
 #include "element.h"
 class Agent
 {
-private:
+protected:
     Plateau* plateau;
     Element* element;
 public:

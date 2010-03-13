@@ -6,6 +6,7 @@
 #include <QtCore/QObject>
 #include "plateau.h"
 
+
 namespace Ui {
     class MainWindow;
 }
