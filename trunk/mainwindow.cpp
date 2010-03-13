@@ -2,10 +2,11 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 #define IMAGE_FEU "./media/feu.png"
-#define IMAGE_ANTENNE "./media/antenne.jpg"
-#define IMAGE_AVION "./media/avion.gif"
-#define IMAGE_PERSONNE "./media/personne.png"
+#define IMAGE_CAPTEUR "./media/antenne.jpg"
+#define IMAGE_DRONE "./media/avion.gif"
+#define IMAGE_VICTIME "./media/personne.png"
 #define IMAGE_POMPIER "./media/pompier.jpg"
+#define IMAGE_ROBOT "./media/robot.jpg"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -63,6 +64,7 @@ void MainWindow::setGrille()
     for(int i = 0; i < this->plateau->getNBLigne(); i++)
         for(int j = 0; j < this->plateau->getNBColone(); j++)
         {
+            this->element[i][j].clear();
             if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Feu"))
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_FEU));
@@ -71,6 +73,26 @@ void MainWindow::setGrille()
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_POMPIER));
             }
-            else this->element[i][j].setText("");
+            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Pompier"))
+            {
+                this->element[i][j].setPixmap(QPixmap(IMAGE_POMPIER));
+            }
+            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Robot"))
+            {
+                this->element[i][j].setPixmap(QPixmap(IMAGE_ROBOT));
+            }
+            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Drone"))
+            {
+                this->element[i][j].setPixmap(QPixmap(IMAGE_DRONE));
+            }
+            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Capteur"))
+            {
+                this->element[i][j].setPixmap(QPixmap(IMAGE_CAPTEUR));
+            }
+            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Victime"))
+            {
+                this->element[i][j].setPixmap(QPixmap(IMAGE_VICTIME));
+            }
+
         }
 }

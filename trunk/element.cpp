@@ -14,7 +14,7 @@ char* Element::getContenue(){
 
 bool Element::setAgent(Agent* agent)
 {
-    if(agent != NULL && this->agent == NULL)
+    if(agent != NULL && this->agent == NULL && this->feu == NULL)
     {
         this->agent = agent;
         this->agent->lier(this);
@@ -25,8 +25,6 @@ bool Element::setAgent(Agent* agent)
 
 bool Element::setFeu(Feu *feu)
 {
-    std::cout<<feu<<std::endl<<"  -  "<<this->feu<<std::endl;
-
     if((feu != NULL) && (this->feu == NULL))
     {
         this->feu = feu;
@@ -34,6 +32,7 @@ bool Element::setFeu(Feu *feu)
         if(this->agent != NULL)
         {
             this->agent->delAgent();
+            this->agent == NULL;
         }
         return true;
     }

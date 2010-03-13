@@ -10,12 +10,12 @@ protected:
     Element* element;
 public:
     Agent(Plateau* plateau);
-    void jouer();
+    virtual void jouer() = 0;
     void lier(Element* element){this->element = element;}
     int getPosX();
     int getPosY();
-    char* className(){return "Agent";}
-    void delAgent(){}
+    virtual char* className(){return "Agent";}
+    virtual void delAgent(){}
 };
 
 #endif // AGENT_H

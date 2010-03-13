@@ -1,5 +1,11 @@
 #include <iostream>
 #include "plateau.h"
+#include "robot.h"
+#include "capteur.h"
+#include "drone.h"
+#include "victime.h"
+#include "pompier.h"
+
 #define NB_FEU 1
 
 Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
@@ -21,11 +27,19 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
         }
     for(int i = 0; i < 3; i++)
     {
-        this->listAgent.append(Agent(this));
+        this->listAgent.append(new Robot(this));
     }
-    this->grille[0][0].setAgent(&this->listAgent[0]);
-    this->grille[0][1].setAgent(&this->listAgent[1]);
-    this->grille[0][2].setAgent(&this->listAgent[2]);
+    this->listAgent.append(new Capteur(this));
+    this->listAgent.append(new Drone(this));
+    this->listAgent.append(new Victime(this));
+    this->listAgent.append(new Pompier(this));
+    this->grille[0][0].setAgent(this->listAgent[0]);
+    this->grille[0][1].setAgent(this->listAgent[1]);
+    this->grille[0][2].setAgent(this->listAgent[2]);
+    this->grille[4][4].setAgent(this->listAgent[3]);
+    this->grille[4][5].setAgent(this->listAgent[4]);
+    this->grille[5][5].setAgent(this->listAgent[5]);
+    this->grille[2][2].setAgent(this->listAgent[6]);
     for(int i = 0; i < NB_FEU; i++)
     {
         this->listFeu.append(Feu(this));
@@ -45,11 +59,10 @@ void Plateau::jouer()
 {
     QList<Feu*> tmp;
     for(int i = 0; i < this->listFeu.size(); i++) tmp.append(&listFeu[i]);
-    std::cout<<"taille du temp : "<<tmp.size()<<std::endl;
     for(int i = 0; i < tmp.size(); i++)
         tmp[i]->jouer();
     for(int i = 0; i < this->listAgent.size(); i++)
-        listAgent[i].jouer();
+        listAgent[i]->jouer();
 }
 Element* Plateau::getElement(int x, int y)
 {
@@ -66,8 +79,9 @@ bool Plateau::deplacer(Feu * feu)
             {                
                 if(feu->getPosX()-i >= 0)
                 {
-                    this->listFeu.append(Feu(this));
-                    this->grille[feu->getPosX()-i][feu->getPosY()].setFeu(&this->listFeu.last());                    
+                    Feu feuBuff(this);
+                    if(this->grille[feu->getPosX()-i][feu->getPosY()].setFeu(&feuBuff))
+                        this->listFeu.append(feuBuff);
                 }
             }
         }
@@ -79,8 +93,9 @@ bool Plateau::deplacer(Feu * feu)
             {
                 if(feu->getPosY()+i <= this->nbColone)
                 {
-                    this->listFeu.append(Feu(this));
-                    this->grille[feu->getPosX()][feu->getPosY()+i].setFeu(&this->listFeu.last());
+                    Feu feuBuff(this);
+                    if(this->grille[feu->getPosX()][feu->getPosY()+i].setFeu(&feuBuff))
+                        this->listFeu.append(Feu(this));
                 }
             }
         }
@@ -92,8 +107,9 @@ bool Plateau::deplacer(Feu * feu)
             {
                 if(feu->getPosX()+i <= this->nbLigne)
                 {
-                    this->listFeu.append(Feu(this));
-                    this->grille[feu->getPosX()+i][feu->getPosY()].setFeu(&this->listFeu.last());
+                    Feu feuBuff(this);
+                    if(this->grille[feu->getPosX()+i][feu->getPosY()].setFeu(&feuBuff))
+                        this->listFeu.append(feuBuff);
                 }
             }
         }
@@ -105,8 +121,9 @@ bool Plateau::deplacer(Feu * feu)
             {
                 if(feu->getPosY()-i >= 0)
                 {
-                    this->listFeu.append(Feu(this));
-                    this->grille[feu->getPosX()][feu->getPosY()-i].setFeu(&this->listFeu.last());
+                    Feu feuBuff(this);
+                    if(this->grille[feu->getPosX()][feu->getPosY()-i].setFeu(&feuBuff))
+                        this->listFeu.append(feuBuff);
                 }
             }
         }
