@@ -43,7 +43,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::jouer()
 {
-    this->plateau->jouer();
+    this->plateau->jouer();   
     this->setGrille();
 }
 

@@ -1,4 +1,5 @@
 #include "element.h"
+#include <iostream>
 
 Element::Element(int x, int y):x(x),y(y)
 {
@@ -22,10 +23,21 @@ bool Element::setAgent(Agent* agent)
     return false;
 }
 
-Feu* Element::setFeu(Plateau *plateau)
+bool Element::setFeu(Feu *feu)
 {
-    this->feu = new Feu(plateau);
-    return this->feu;
+    std::cout<<feu<<std::endl<<"  -  "<<this->feu<<std::endl;
+
+    if((feu != NULL) && (this->feu == NULL))
+    {
+        this->feu = feu;
+        this->feu->lier(this);
+        if(this->agent != NULL)
+        {
+            this->agent->delAgent();
+        }
+        return true;
+    }
+    return false;
 }
 
 void Element::delAgent()
