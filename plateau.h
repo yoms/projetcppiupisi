@@ -13,7 +13,7 @@ class Plateau
 private:
     Element **grille;
     QList<Feu> listFeu;
-    QList<Agent> listAgent;
+    QList<Agent*> listAgent;
     int nbLigne;
     int nbColone;
     Direction directionVent;
@@ -31,7 +31,7 @@ public:
     int getNBLigne(){return this->nbLigne;}
     int getNBColone(){return this->nbColone;}
     QList<Feu> getListFeu() const {return this->listFeu;}
-    QList<Agent> getListAgent() const {return this->listAgent;}
+    QList<Agent*> getListAgent() const {return this->listAgent;}
     Direction getVent() const {return this->directionVent;}
 };
 

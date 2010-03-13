@@ -1,7 +1,9 @@
 #include "feu.h"
 
 Feu::Feu(Plateau* plateau):plateau(plateau)
-{}
+{
+    this->element = NULL;
+}
 
 void Feu::jouer()
 {
