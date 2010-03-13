@@ -18,7 +18,7 @@ public:
     void setX(int x){this->x = x;}
     void setY(int y){this->y = y;}
     bool setAgent(Agent*);
-    Feu* setFeu(Plateau* plateau);
+    bool setFeu(Feu*);
     void delAgent();
     void delFeu();
 };

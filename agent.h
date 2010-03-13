@@ -15,6 +15,7 @@ public:
     int getPosX();
     int getPosY();
     char* className(){return "Agent";}
+    void delAgent(){}
 };
 
 #endif // AGENT_H

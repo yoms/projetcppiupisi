@@ -2,8 +2,10 @@
 
 Feu::Feu(Plateau* plateau):plateau(plateau)
 {}
+
 void Feu::jouer()
 {
+       plateau->deplacer(this);
 }
 
 int Feu::getPosX()
