@@ -36,4 +36,4 @@ OTHER_FILES += media/pompier.jpg \
     media/feu.png \
     media/avion.gif \
     media/antenne.jpg \
-    media/robot.jpg
+    media/robot.png
