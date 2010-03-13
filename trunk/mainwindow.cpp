@@ -14,7 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->plateau = new Plateau;
+    this->plateau = new Plateau(10,10);
     this->element = new QLabel*[plateau->getNBLigne()];
     for(int i = 0; i < plateau->getNBLigne(); i++)
     {

@@ -57,12 +57,14 @@ Plateau::~Plateau()
 
 void Plateau::jouer()
 {
-    QList<Feu*> tmp;
-    for(int i = 0; i < this->listFeu.size(); i++) tmp.append(&listFeu[i]);
-    for(int i = 0; i < tmp.size(); i++)
-        tmp[i]->jouer();
-    for(int i = 0; i < this->listAgent.size(); i++)
-        listAgent[i]->jouer();
+    QList<Feu*> tmpFeu;
+    for(int i = 0; i < this->listFeu.size(); i++) tmpFeu.append(&listFeu[i]);
+    QList<Agent*> tmpAgent;
+    for(int i = 0; i < this->listAgent.size(); i++) tmpAgent.append(listAgent[i]);
+    for(int i = 0; i < tmpFeu.size(); i++)
+        tmpFeu[i]->jouer();
+    for(int i = 0; i < tmpAgent.size(); i++)
+        tmpAgent[i]->jouer();
 }
 Element* Plateau::getElement(int x, int y)
 {
@@ -145,3 +147,25 @@ bool Plateau::deplacer( Agent* agent, int x, int y )
 
 }
 
+void Plateau::supElement(Agent * agent)
+{
+    for(int i=0;i<this->listAgent.size();i++)
+    {
+        if(this->listAgent[i] == agent)
+        {            
+            delete this->listAgent[i];
+            this->listAgent.removeAt(i);           
+        }
+    }
+}
+
+void Plateau::supElement(Feu * feu)
+{
+    for(int i=0;i<this->listFeu.size();i++)
+    {
+        if(&this->listFeu[i] == feu)
+        {
+            this->listFeu.removeAt(i);
+        }
+    }
+}

@@ -33,6 +33,9 @@ public:
     QList<Feu> getListFeu() const {return this->listFeu;}
     QList<Agent*> getListAgent() const {return this->listAgent;}
     Direction getVent() const {return this->directionVent;}
+
+    void supElement(Agent * agent);
+    void supElement(Feu * feu);
 };
 
 #endif // PLATEAU_H
