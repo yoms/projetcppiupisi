@@ -139,8 +139,8 @@ bool Plateau::deplacer( Agent* agent, int x, int y )
     if( x + agent->getPosX() < this->nbLigne &&
         y + agent->getPosY() < this->nbColone)
     {
-        this->grille[agent->getPosX()][agent->getPosY()].delAgent();
-        this->grille[agent->getPosX() + x][agent->getPosY() + y].setAgent(agent);
+        if(this->grille[agent->getPosX() + x][agent->getPosY() + y].setAgent(agent))
+            this->grille[agent->getPosX()- x][agent->getPosY() - y].delAgent();
         return true;
     }
     return false;
