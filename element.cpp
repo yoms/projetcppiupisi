@@ -14,7 +14,7 @@ char* Element::getContenue(){
 
 bool Element::setAgent(Agent* agent)
 {
-    if(agent != NULL && this->agent == NULL && this->feu == NULL)
+    if(agent != NULL && this->agent == NULL)
     {
         if(this->feu != NULL)
         {            
