@@ -69,30 +69,31 @@ void MainWindow::setGrille()
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_FEU));
             }
-            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Agent"))
+            else if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Agent"))
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_POMPIER));
             }
-            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Pompier"))
+            else if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Pompier"))
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_POMPIER));
             }
-            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Robot"))
+            else if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Robot"))
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_ROBOT));
             }
-            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Drone"))
+            else if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Drone"))
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_DRONE));
             }
-            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Capteur"))
+            else if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Capteur"))
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_CAPTEUR));
             }
-            if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Victime"))
+            else if(QString(this->plateau->getElement(i,j)->getContenue()) == QString("Victime"))
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_VICTIME));
             }
+            else this->element[i][j].setText(this->plateau->getElement(i,j)->getContenue());
 
         }
 }
