@@ -19,10 +19,10 @@ public:
     void setY(int y){this->y = y;}
     bool setAgent(Agent*);
     bool setFeu(Feu*);
+    Agent* getAgent(){return agent;}
+    Feu* getFeu(){return feu;}
     void delAgent();
     void delFeu();
-    Agent* getAgent(){ return this->agent; }
-    Feu* getFeu(){ return this->feu; }
 };
 
 #endif // ELEMENT_H

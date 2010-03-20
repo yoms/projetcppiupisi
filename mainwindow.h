@@ -26,6 +26,7 @@ private:
 
     Ui::MainWindow *ui;
     QLabel** element;
+    QLabel** elementVue;
     Plateau* plateau;
 };
 

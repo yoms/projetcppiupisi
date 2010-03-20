@@ -15,6 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->plateau = new Plateau(10,10);
+
+
+    //---------------------------------------------------------------
+    //Creation de la grille
     this->element = new QLabel*[plateau->getNBLigne()];
     for(int i = 0; i < plateau->getNBLigne(); i++)
     {
@@ -28,6 +32,25 @@ MainWindow::MainWindow(QWidget *parent) :
             this->element[i][j].setMaximumSize(50,50);
             this->element[i][j].setMinimumSize(50,50);
         }
+
+
+    //---------------------------------------------------------------
+    //Creation de la grille Vue par les Agents
+    this->elementVue = new QLabel*[plateau->getNBLigne()];
+    for(int i = 0; i < plateau->getNBLigne(); i++)
+    {
+        this->elementVue[i] = new QLabel[this->plateau->getNBColone()];
+    }
+    for(int i =0; i <this->plateau->getNBLigne(); i++)
+        for(int j = 0; j < this->plateau->getNBColone(); j++)
+        {
+            this->ui->gridLayout_2->addWidget(&this->elementVue[i][j], i, j);
+            this->elementVue[i][j].resize(50,50);
+            this->elementVue[i][j].setMaximumSize(50,50);
+            this->elementVue[i][j].setMinimumSize(50,50);
+        }
+
+
     this->setGrille();
     connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(jouer()));
     
@@ -37,8 +60,12 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     for(int i = 0; i < this->plateau->getNBLigne(); i++)
+    {
         delete[] this->element[i];
+        delete[] this->elementVue[i];
+    }
     delete[] this->element;
+    delete[] this->elementVue;
     delete ui;
 }
 
@@ -94,6 +121,41 @@ void MainWindow::setGrille()
                 this->element[i][j].setPixmap(QPixmap(IMAGE_VICTIME));
             }
             else this->element[i][j].setText(this->plateau->getElement(i,j)->getContenue());
+
+        }
+    for(int i = 0; i < this->plateau->getNBLigne(); i++)
+        for(int j = 0; j < this->plateau->getNBColone(); j++)
+        {
+            this->elementVue[i][j].clear();
+            if(QString(this->plateau->getElementVue(i,j)->getContenue()) == QString("Feu"))
+            {
+                this->elementVue[i][j].setPixmap(QPixmap(IMAGE_FEU));
+            }
+            else if(QString(this->plateau->getElementVue(i,j)->getContenue()) == QString("Agent"))
+            {
+                this->elementVue[i][j].setPixmap(QPixmap(IMAGE_POMPIER));
+            }
+            else if(QString(this->plateau->getElementVue(i,j)->getContenue()) == QString("Pompier"))
+            {
+                this->elementVue[i][j].setPixmap(QPixmap(IMAGE_POMPIER));
+            }
+            else if(QString(this->plateau->getElementVue(i,j)->getContenue()) == QString("Robot"))
+            {
+                this->elementVue[i][j].setPixmap(QPixmap(IMAGE_ROBOT));
+            }
+            else if(QString(this->plateau->getElementVue(i,j)->getContenue()) == QString("Drone"))
+            {
+                this->elementVue[i][j].setPixmap(QPixmap(IMAGE_DRONE));
+            }
+            else if(QString(this->plateau->getElementVue(i,j)->getContenue()) == QString("Capteur"))
+            {
+                this->elementVue[i][j].setPixmap(QPixmap(IMAGE_CAPTEUR));
+            }
+            else if(QString(this->plateau->getElementVue(i,j)->getContenue()) == QString("Victime"))
+            {
+                this->elementVue[i][j].setPixmap(QPixmap(IMAGE_VICTIME));
+            }
+            else this->elementVue[i][j].setText(this->plateau->getElementVue(i,j)->getContenue());
 
         }
 }

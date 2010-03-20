@@ -12,8 +12,10 @@ class Plateau
 {
 private:
     Element **grille;
+    Element **grilleVue;
     QList<Feu> listFeu;
     QList<Agent*> listAgent;
+    QList<Agent*> listDetection;
     int nbLigne;
     int nbColone;
     Direction directionVent;
@@ -25,9 +27,12 @@ public:
     void jouer();
     bool deplacer( Agent*, int x, int y );
     bool deplacer( Feu* );
-    
+
     Element* getElement(int x, int y);
+    Element* getElementVue(int x, int y);
     Element** getGrille() const {return this->grille;}
+    Element** getGrilleVue() const {return this->grilleVue;}
+    QList<Agent*> *getListDetection(){return &this->listDetection;}
     int getNBLigne(){return this->nbLigne;}
     int getNBColone(){return this->nbColone;}
     QList<Feu> getListFeu() const {return this->listFeu;}

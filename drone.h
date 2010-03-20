@@ -13,7 +13,7 @@ public:
     void personneBlesser(int x,int y ){}
     void feu(int x,int y ){}
     char* className(){ return "Drone"; }
-    void transmettre(QList<Agent *> *){}
+    void transmettre(QList<Agent *> *);
 };
 
 #endif // DRONE_H

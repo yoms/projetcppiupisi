@@ -2,6 +2,7 @@
 
 Agent::Agent(Plateau *plateau):plateau(plateau)
 {
+    this->vision = 1;
 }
 
 
