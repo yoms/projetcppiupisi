@@ -4,6 +4,9 @@
 
 class Drone : public Secours
 {
+private:
+    int posXCourante;
+    int posYCourante;
 public:
     Drone(Plateau* plateau);
     void jouer();

@@ -6,7 +6,7 @@
 #include "victime.h"
 #include "pompier.h"
 
-#define NB_FEU 1
+#define NB_FEU 3
 
 Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
 {
@@ -34,17 +34,19 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
     this->listAgent.append(new Victime(this));
     this->listAgent.append(new Pompier(this));
     this->grille[0][0].setAgent(this->listAgent[0]);
-    this->grille[0][1].setAgent(this->listAgent[1]);
-    this->grille[0][2].setAgent(this->listAgent[2]);
+    this->grille[2][1].setAgent(this->listAgent[1]);
+    this->grille[4][2].setAgent(this->listAgent[2]);
     this->grille[4][4].setAgent(this->listAgent[3]);
     this->grille[4][5].setAgent(this->listAgent[4]);
     this->grille[5][5].setAgent(this->listAgent[5]);
     this->grille[2][2].setAgent(this->listAgent[6]);
+    qsrand((int)this->listAgent[0]);
+
     for(int i = 0; i < NB_FEU; i++)
     {
         this->listFeu.append(Feu(this));
+        this->grille[0+i][0].setFeu(&this->listFeu.last());
     }
-    this->grille[3][4].setFeu(&this->listFeu[0]);
 
 }
 
@@ -140,8 +142,10 @@ bool Plateau::deplacer( Agent* agent, int x, int y )
         y + agent->getPosY() < this->nbColone)
     {
         if(this->grille[agent->getPosX() + x][agent->getPosY() + y].setAgent(agent))
+        {
             this->grille[agent->getPosX()- x][agent->getPosY() - y].delAgent();
-        return true;
+            return true;
+        }
     }
     return false;
 
@@ -149,14 +153,8 @@ bool Plateau::deplacer( Agent* agent, int x, int y )
 
 void Plateau::supElement(Agent * agent)
 {
-    for(int i=0;i<this->listAgent.size();i++)
-    {
-        if(this->listAgent[i] == agent)
-        {            
-            delete this->listAgent[i];
-            this->listAgent.removeAt(i);           
-        }
-    }
+    this->listAgent.removeAt(this->listAgent.indexOf(agent));
+    this->grille[agent->getPosX()][agent->getPosY()].delAgent();
 }
 
 void Plateau::supElement(Feu * feu)
@@ -166,6 +164,7 @@ void Plateau::supElement(Feu * feu)
         if(&this->listFeu[i] == feu)
         {
             this->listFeu.removeAt(i);
+            this->grille[feu->getPosX()][feu->getPosY()].delFeu();
         }
     }
 }

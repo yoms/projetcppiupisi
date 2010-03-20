@@ -7,21 +7,17 @@ Element::Element(int x, int y):x(x),y(y)
     this->feu = NULL;
 }
 char* Element::getContenue(){
-    if(feu != NULL)return feu->className();
-    else if(agent != NULL) return agent->className();
+    if(agent != NULL) return agent->className();
+    else if(feu != NULL)return feu->className();
     return "";
 }
 
 bool Element::setAgent(Agent* agent)
 {
-    if(agent != NULL && this->agent == NULL)
+    if(agent != NULL && this->agent == NULL && this->feu == NULL)
     {
-        if(this->feu != NULL)
-        {            
-            agent->delAgent();
-        }
         this->agent = agent;
-        this->agent->lier(this);        
+        this->agent->lier(this);
         return true;
     }
     return false;
@@ -45,10 +41,12 @@ bool Element::setFeu(Feu *feu)
 
 void Element::delAgent()
 {
-    this->agent = NULL;
+    if(this->agent != NULL)
+        this->agent = NULL;
 }
 
 void Element::delFeu()
 {
-    this->feu = NULL;
+    if(this->feu != NULL)
+        this->feu = NULL;
 }
