@@ -36,6 +36,8 @@ public:
 
     void supElement(Agent * agent);
     void supElement(Feu * feu);
+
+    void detection(QList<Agent *>*);
 };
 
 #endif // PLATEAU_H

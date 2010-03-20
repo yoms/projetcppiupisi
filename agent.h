@@ -9,6 +9,7 @@ class Agent
 protected:
     Plateau* plateau;
     Element* element;
+    int vision;
 public:
     Agent(Plateau* plateau);
     virtual void jouer() = 0;
@@ -17,6 +18,8 @@ public:
     int getPosY();
     virtual char* className(){return "Agent";}
     virtual void delAgent();
+    int getVision(){ return this->vision; }
+    virtual void transmettre(QList <Agent*> *){}
 };
 
 #endif // AGENT_H

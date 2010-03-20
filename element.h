@@ -21,6 +21,8 @@ public:
     bool setFeu(Feu*);
     void delAgent();
     void delFeu();
+    Agent* getAgent(){ return this->agent; }
+    Feu* getFeu(){ return this->feu; }
 };
 
 #endif // ELEMENT_H

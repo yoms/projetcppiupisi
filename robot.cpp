@@ -2,6 +2,7 @@
 
 Robot::Robot(Plateau *plateau):Secours(plateau)
 {
+    this->vision = 1;
 }
 void Robot::jouer()
 {
