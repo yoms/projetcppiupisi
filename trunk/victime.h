@@ -6,7 +6,7 @@
 class Victime : public PDA, public Agent
 {
 public:
-    Victime(Plateau* plateau):Agent(plateau){}
+    Victime(Plateau* plateau):Agent(plateau){ this->vision = 1; }
     virtual void jouer();
     virtual char* className(){return "Victime";}
     virtual void delAgent(){}
