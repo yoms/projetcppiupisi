@@ -37,10 +37,10 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
     this->grille[2][1].setAgent(this->listAgent[1]);
     this->grille[4][2].setAgent(this->listAgent[2]);
     this->grille[4][4].setAgent(this->listAgent[3]);
-    this->grille[4][5].setAgent(this->listAgent[4]);
+    this->grille[5][7].setAgent(this->listAgent[4]);
     this->grille[5][5].setAgent(this->listAgent[5]);
     this->grille[2][2].setAgent(this->listAgent[6]);
-    qsrand((int)this->listAgent[0]);
+
 
     for(int i = 0; i < NB_FEU; i++)
     {
@@ -167,4 +167,51 @@ void Plateau::supElement(Feu * feu)
             this->grille[feu->getPosX()][feu->getPosY()].delFeu();
         }
     }
+}
+
+void Plateau::detection(QList<Agent*> *listDetection)
+{
+    int x = listDetection->last()->getPosX();
+    int y = listDetection->last()->getPosY();
+    int vision = listDetection->last()->getVision();
+    bool robot;
+    bool drone;
+    bool antenne;
+    Agent * bufAgent;
+
+    //Detection contour elementCourant
+    //si antenne disponible => on transmet a antenne
+    //sinon on regarde si ya un robot ou un drone
+    for(int i=x-vision;i<=x+vision;i++)
+    {
+        for(int j=y-vision;j<=y+vision;j++)
+        {
+            if(i>=0 && j>=0 && i<this->nbLigne && j<this->nbColone)
+            {
+                if(this->getElement(i,j)->getAgent() != NULL)
+                {
+                    if(this->getElement(i,j)->getAgent()->className() == "Capteur")
+                    {
+                        antenne = true;
+                        this->getElement(i,j)->getAgent()->transmettre(listDetection);
+                    }
+                    else if(this->getElement(i,j)->getAgent()->className() == "Drone" && !antenne)
+                    {
+                        drone = true;
+                        bufAgent = this->getElement(i,j)->getAgent();
+                    }
+                    else if(this->getElement(i,j)->getAgent()->className() == "Robot" && !drone && !robot && !antenne)
+                    {
+                        robot = true;
+                        bufAgent = this->getElement(i,j)->getAgent();
+                    }
+                }
+            }
+        }
+    }
+
+    //transmission a un drone
+    //sinon transmission a un robot
+    if(drone || robot && !antenne)
+        bufAgent->transmettre(listDetection);
 }
