@@ -16,9 +16,9 @@ public:
     void lier(Element* element){this->element = element;}
     int getPosX();
     int getPosY();
+    int getVision(){return this->vision;}
     virtual char* className(){return "Agent";}
     virtual void delAgent();
-    int getVision(){ return this->vision; }
     virtual void transmettre(QList <Agent*> *){}
 };
 
