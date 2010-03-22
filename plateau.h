@@ -6,7 +6,10 @@ enum Direction { EST, OUEST, NORD, SUD};
 #include "element.h"
 #include "agent.h"
 #include "feu.h"
-
+struct Point{
+    int x;
+    int y;
+};
 
 class Plateau
 {

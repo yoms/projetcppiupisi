@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
+#include <unistd.h>
+#include <QTimer>
 #define IMAGE_FEU "./media/feu.png"
 #define IMAGE_CAPTEUR "./media/antenne.jpg"
 #define IMAGE_DRONE "./media/avion.gif"
@@ -52,8 +54,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     this->setGrille();
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(jouer()));
+    timer->start(200);
     connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(jouer()));
-    
+
 
 }
 

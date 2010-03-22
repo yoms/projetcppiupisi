@@ -4,6 +4,7 @@
 #include "plateau.h"
 class Robot : public Secours
 {
+    Point cible;
 public:
     Robot(Plateau* plateau);
     void jouer();

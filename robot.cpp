@@ -17,6 +17,9 @@ void Robot::jouer()
 }
 void Robot::transmettre(QList<Agent *> *list)
 {
-    list->append(this);
-    this->plateau->detection(list);
+    if(!list->contains(this))
+    {
+        list->append(this);
+        this->plateau->detection(list);
+    }
 }
