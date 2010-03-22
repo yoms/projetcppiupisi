@@ -29,7 +29,7 @@ bool Element::setFeu(Feu *feu)
     {
         this->feu = feu;
         this->feu->lier(this);
-        if(this->agent != NULL)
+        if(this->agent != NULL && (QString(this->agent->className()) != QString("Drone")))
         {
             this->agent->delAgent();
             this->agent == NULL;

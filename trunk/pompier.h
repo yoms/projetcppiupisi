@@ -3,10 +3,10 @@
 #include "pda.h"
 #include "agent.h"
 
-class Pompier : public Agent, public PDA
+class Pompier : public PDA
 {
 public:
-    Pompier(Plateau* plateau):Agent(plateau){ this->vision = 1; }
+    Pompier(Plateau* plateau):PDA(plateau){ this->vision = 1; }
     virtual void jouer();
     virtual char* className(){return "Pompier";}
     virtual void transmettre(QList <Agent*> *){};

@@ -69,7 +69,7 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
     }
     for(int i = 0; i < NB_VICTIME; i++)
     {
-        this->listAgent.append(new Victime(this));
+        this->listAgent.append(new Victime(this/*, qrand()%2 == 0? VALIDE:BLESSER*/));
         while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
     for(int i = 0; i < NB_POMPIER; i++)
@@ -133,9 +133,8 @@ bool Plateau::deplacer(Feu * feu)
             {                
                 if(feu->getPosX()-i >= 0)
                 {
-                    Feu feuBuff(this);
-                    if(this->grille[feu->getPosX()-i][feu->getPosY()].setFeu(&feuBuff))
-                        this->listFeu.append(feuBuff);
+                    this->listFeu.append(Feu(this));
+                    if(this->grille[feu->getPosX()-i][feu->getPosY()].setFeu(&this->listFeu.last()))this->listFeu.removeLast();
                 }
             }
         }
@@ -147,9 +146,8 @@ bool Plateau::deplacer(Feu * feu)
             {
                 if(feu->getPosY()+i <= this->nbColone)
                 {
-                    Feu feuBuff(this);
-                    if(this->grille[feu->getPosX()][feu->getPosY()+i].setFeu(&feuBuff))
-                        this->listFeu.append(Feu(this));
+                    this->listFeu.append(Feu(this));
+                    if(this->grille[feu->getPosX()][feu->getPosY()+i].setFeu(&this->listFeu.last()))this->listFeu.removeLast();
                 }
             }
         }
@@ -161,9 +159,8 @@ bool Plateau::deplacer(Feu * feu)
             {
                 if(feu->getPosX()+i <= this->nbLigne)
                 {
-                    Feu feuBuff(this);
-                    if(this->grille[feu->getPosX()+i][feu->getPosY()].setFeu(&feuBuff))
-                        this->listFeu.append(feuBuff);
+                    this->listFeu.append(Feu(this));
+                    if(this->grille[feu->getPosX()+i][feu->getPosY()].setFeu(&this->listFeu.last()))this->listFeu.removeLast();
                 }
             }
         }
@@ -175,9 +172,8 @@ bool Plateau::deplacer(Feu * feu)
             {
                 if(feu->getPosY()-i >= 0)
                 {
-                    Feu feuBuff(this);
-                    if(this->grille[feu->getPosX()][feu->getPosY()-i].setFeu(&feuBuff))
-                        this->listFeu.append(feuBuff);
+                    this->listFeu.append(Feu(this));
+                    if(!this->grille[feu->getPosX()][feu->getPosY()-i].setFeu(&this->listFeu.last()))this->listFeu.removeLast();
                 }
             }
         }
@@ -205,21 +201,29 @@ bool Plateau::deplacer( Agent* agent, int x, int y )
 
 void Plateau::supElement(Agent * agent)
 {
-    this->listAgent.removeAt(this->listAgent.indexOf(agent));
-    this->grille[agent->getPosX()][agent->getPosY()].delAgent();
-    delete agent;
+    if(agent != NULL)
+    {
+        this->listAgent.removeAt(this->listAgent.indexOf(agent));
+        this->grille[agent->getPosX()][agent->getPosY()].delAgent();
+        delete agent;
+    }
 }
 
 void Plateau::supElement(Feu * feu)
 {
-    for(int i=0;i<this->listFeu.size();i++)
-    {
-        if(&this->listFeu[i] == feu)
+    if( feu != NULL )
+        std::cout<<listFeu.size()<<std::endl;
+        for(int i=0;i<this->listFeu.size();i++)
         {
-            this->listFeu.removeAt(i);
-            this->grille[feu->getPosX()][feu->getPosY()].delFeu();
+            std::cout<<bool(&this->listFeu[i] == feu)<<" i : "<<i<<std::endl;
+
+            if(&this->listFeu[i] == feu)
+            {
+                std::cout<<"Trouver mouhahahahaha!!!!\n je suis horrible"<<std::endl;
+                this->grille[feu->getPosX()][feu->getPosY()].delFeu();
+                this->listFeu.removeAt(i);
+            }
         }
-    }
 }
 
 void Plateau::detection(QList<Agent*> *listDetection)
@@ -261,7 +265,6 @@ void Plateau::detection(QList<Agent*> *listDetection)
             }
         }
     }
-    bool finOption = false;
     //transmission a un drone
     //sinon transmission a un robot
     if(!antenne.empty())
@@ -271,18 +274,16 @@ void Plateau::detection(QList<Agent*> *listDetection)
         if(!drone.empty())
             for(int i = 0; i < drone.size(); i++)
             {
-                if(!listDetection->contains(drone[i]))
+                if(!listDetection->contains(drone[i]) && listDetection->size() < 10)
                 {
-                    finOption = finOption || true;
                     drone[i]->transmettre(listDetection);
                 }
             }
-        if(!robot.empty())
+        else if(!robot.empty())
             for(int i = 0; i < robot.size(); i++)
             {
-                if(!listDetection->contains(robot[i]))
+                if(!listDetection->contains(robot[i]) && listDetection->size() < 10)
                 {
-                    finOption = finOption || true;
                     robot[i]->transmettre(listDetection);
                 }
             }
