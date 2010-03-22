@@ -9,6 +9,8 @@ public:
     Victime(Plateau* plateau):Agent(plateau){ this->vision = 1; }
     virtual void jouer();
     virtual char* className(){return "Victime";}
+    virtual void transmettre(QList <Agent*> *){};
+    Element* getFeuPlusProche();
 };
 
 #endif // VICTIME_H

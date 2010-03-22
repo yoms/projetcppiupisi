@@ -19,7 +19,7 @@ public:
     int getVision(){return this->vision;}
     virtual char* className(){return "Agent";}
     virtual void delAgent();
-    virtual void transmettre(QList <Agent*> *){}
+    virtual void transmettre(QList <Agent*> *)= 0;
 };
 
 #endif // AGENT_H
