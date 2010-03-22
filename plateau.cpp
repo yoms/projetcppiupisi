@@ -8,6 +8,11 @@
 #include "pompier.h"
 
 #define NB_FEU 3
+#define NB_DRONE 1
+#define NB_ROBOT 3
+#define NB_VICTIME 3
+#define NB_POMPIER 3
+#define NB_CAPTEUR 3
 
 Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
 {
@@ -45,29 +50,37 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
 
     //---------------------------------------------------------------
 
-    for(int i = 0; i < 3; i++)
-    {
-        this->listAgent.append(new Robot(this));
-    }
-    this->listAgent.append(new Drone(this));
-    this->listAgent.append(new Victime(this));
-    this->listAgent.append(new Pompier(this));
-    this->listAgent.append(new Capteur(this));
-    this->listAgent.append(new Capteur(this));
-    this->grille[0][0].setAgent(this->listAgent[0]);
-    this->grille[2][1].setAgent(this->listAgent[1]);
-    this->grille[4][2].setAgent(this->listAgent[2]);
-    this->grille[3][4].setAgent(this->listAgent[3]);
-    this->grille[4][0].setAgent(this->listAgent[4]);
-    this->grille[5][5].setAgent(this->listAgent[5]);
-    this->grille[2][2].setAgent(this->listAgent[6]);
-    this->grille[7][7].setAgent(this->listAgent[7]);
-
-
+    qsrand((int)this->grille);
     for(int i = 0; i < NB_FEU; i++)
     {
         this->listFeu.append(Feu(this));
-        this->grille[3+i][2].setFeu(&this->listFeu.last());
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setFeu(&this->listFeu.last()));
+    }
+    for(int i = 0; i < NB_DRONE; i++)
+    {
+        this->listAgent.append(new Drone(this));
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
+    }
+
+    for(int i = 0; i < NB_ROBOT; i++)
+    {
+        this->listAgent.append(new Robot(this));
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
+    }
+    for(int i = 0; i < NB_VICTIME; i++)
+    {
+        this->listAgent.append(new Victime(this));
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
+    }
+    for(int i = 0; i < NB_POMPIER; i++)
+    {
+        this->listAgent.append(new Pompier(this));
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
+    }
+    for(int i = 0; i < NB_CAPTEUR; i++)
+    {
+        this->listAgent.append(new Capteur(this));
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
 
 }
@@ -175,7 +188,9 @@ bool Plateau::deplacer(Feu * feu)
 bool Plateau::deplacer( Agent* agent, int x, int y )
 {
 
-    if( x + agent->getPosX() < this->nbLigne &&
+    if( x + agent->getPosX() >= 0            &&
+        y + agent->getPosY() >= 0            &&
+        x + agent->getPosX() < this->nbLigne &&
         y + agent->getPosY() < this->nbColone)
     {
         if(this->grille[agent->getPosX() + x][agent->getPosY() + y].setAgent(agent))
