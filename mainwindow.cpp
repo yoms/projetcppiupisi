@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->plateau = new Plateau(10,10);
+    this->plateau = new Plateau;
 
 
     //---------------------------------------------------------------

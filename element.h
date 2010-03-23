@@ -10,6 +10,7 @@ private:
     Feu* feu;
     Agent* agent;
     int x, y;
+    bool eteind;
 public:
     Element(int x = 0, int y = 0);
     char* getContenue();

@@ -10,7 +10,7 @@ public:
     void personneBlesser(int x,int y ){}
     void feu(int x,int y ){}
     char* className(){ return "Capteur"; }
-    void transmettre(QList<Agent *> *){}
+    void transmettre(QList<Agent*>* list);
 };
 
 #endif // CAPTEUR_H
