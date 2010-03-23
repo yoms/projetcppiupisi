@@ -1,10 +1,10 @@
 /********************************************************************************
-** Form generated from reading UI file 'mainwindow.ui'
+** Form generated from reading ui file 'mainwindow.ui'
 **
-** Created: Sat 20. Mar 19:45:24 2010
-**      by: Qt User Interface Compiler version 4.6.2
+** Created: Sat Mar 20 16:54:14 2010
+**      by: Qt User Interface Compiler version 4.5.2
 **
-** WARNING! All changes made in this file will be lost when recompiling UI file!
+** WARNING! All changes made in this file will be lost when recompiling ui file!
 ********************************************************************************/
 
 #ifndef UI_MAINWINDOW_H
@@ -34,6 +34,9 @@ public:
     QFrame *frame;
     QHBoxLayout *horizontalLayout_3;
     QGridLayout *gridLayout;
+    QFrame *frame_2;
+    QHBoxLayout *horizontalLayout_4;
+    QGridLayout *gridLayout_2;
     QPushButton *pushButton;
 
     void setupUi(QMainWindow *MainWindow)
@@ -63,6 +66,20 @@ public:
 
         horizontalLayout_2->addWidget(frame);
 
+        frame_2 = new QFrame(widget);
+        frame_2->setObjectName(QString::fromUtf8("frame_2"));
+        frame_2->setFrameShape(QFrame::StyledPanel);
+        frame_2->setFrameShadow(QFrame::Raised);
+        horizontalLayout_4 = new QHBoxLayout(frame_2);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        gridLayout_2 = new QGridLayout();
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+
+        horizontalLayout_4->addLayout(gridLayout_2);
+
+
+        horizontalLayout_2->addWidget(frame_2);
+
         pushButton = new QPushButton(widget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
 
@@ -82,6 +99,7 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Next", 0, QApplication::UnicodeUTF8));
+        Q_UNUSED(MainWindow);
     } // retranslateUi
 
 };

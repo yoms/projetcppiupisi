@@ -61,7 +61,11 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
         this->listAgent.append(new Drone(this));
         while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
-
+    for(int i = 0; i < NB_CAPTEUR; i++)
+    {
+        this->listAgent.append(new Capteur(this));
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
+    }
     for(int i = 0; i < NB_ROBOT; i++)
     {
         this->listAgent.append(new Robot(this));
@@ -77,11 +81,7 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
         this->listAgent.append(new Pompier(this));
         while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
-    for(int i = 0; i < NB_CAPTEUR; i++)
-    {
-        this->listAgent.append(new Capteur(this));
-        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
-    }
+
 
 }
 
@@ -107,12 +107,10 @@ void Plateau::jouer()
     QList<Feu*> tmpFeu;
     for(int i = 0; i < this->listFeu.size(); i++) tmpFeu.append(&listFeu[i]);
     for(int i = 0; i < tmpFeu.size(); i++)
-        tmpFeu[i]->jouer();
+        listFeu[i].jouer();
 
-    QList<Agent*> tmpAgent;
-    for(int i = 0; i < this->listAgent.size(); i++) tmpAgent.append(listAgent[i]);
-    for(int i = 0; i < tmpAgent.size(); i++)
-        tmpAgent[i]->jouer();
+    for(int i = 0; i < listAgent.size(); i++)
+        listAgent[i]->jouer();
 }
 Element* Plateau::getElement(int x, int y)
 {
@@ -215,11 +213,8 @@ void Plateau::supElement(Feu * feu)
         std::cout<<listFeu.size()<<std::endl;
         for(int i=0;i<this->listFeu.size();i++)
         {
-            std::cout<<bool(&this->listFeu[i] == feu)<<" i : "<<i<<std::endl;
-
             if(&this->listFeu[i] == feu)
             {
-                std::cout<<"Trouver mouhahahahaha!!!!\n je suis horrible"<<std::endl;
                 this->grille[feu->getPosX()][feu->getPosY()].delFeu();
                 this->listFeu.removeAt(i);
             }
@@ -236,11 +231,12 @@ void Plateau::detection(QList<Agent*> *listDetection)
     QList<Agent*> antenne;
     QList<Agent*> drone;
     QList<Agent*> robot;
-
-
+    for(int i = 0; i < listDetection->size(); i++)
+        std::cout<< listDetection->at(i)->className() <<" : "<<listDetection->at(i)<<" size: "<<i <<std::endl;
     //Detection contour elementCourant
     //si antenne disponible => on transmet a antenne
     //sinon on regarde si ya un robot ou un drone
+    QString string1, string2;
     for(int i=x-vision;i<=x+vision;i++)
     {
         for(int j=y-vision;j<=y+vision;j++)
@@ -249,15 +245,15 @@ void Plateau::detection(QList<Agent*> *listDetection)
             {
                 if(this->getElement(i,j)->getAgent() != NULL)
                 {
-                    if(QString(this->getElement(i,j)->getContenue()) == QString("Capteur"))
+                    if((string1 = this->getElement(i,j)->getContenue()) == (string2 = "Capteur"))
                     {
                         antenne.append(this->getElement(i,j)->getAgent());
                     }
-                    else if(QString(this->getElement(i,j)->getContenue()) == QString("Drone"))
+                    else if((string1 = this->getElement(i,j)->getContenue()) == (string2 = "Drone"))
                     {
                         drone.append(this->getElement(i,j)->getAgent());
                     }
-                    else if(QString(this->getElement(i,j)->getContenue()) == QString("Robot"))
+                    else if((string1 = this->getElement(i,j)->getContenue()) == (string2 = "Robot"))
                     {
                         robot.append(this->getElement(i,j)->getAgent());
                     }
@@ -267,6 +263,7 @@ void Plateau::detection(QList<Agent*> *listDetection)
     }
     //transmission a un drone
     //sinon transmission a un robot
+
     if(!antenne.empty())
         antenne.last()->transmettre(listDetection);
     else
@@ -274,19 +271,19 @@ void Plateau::detection(QList<Agent*> *listDetection)
         if(!drone.empty())
             for(int i = 0; i < drone.size(); i++)
             {
-                if(!listDetection->contains(drone[i]) && listDetection->size() < 10)
-                {
-                    drone[i]->transmettre(listDetection);
-                }
-            }
+                    if(!listDetection->contains(drone[i]))
+                    {
+                        drone[i]->transmettre(listDetection);
+                    }
+             }
         else if(!robot.empty())
             for(int i = 0; i < robot.size(); i++)
             {
-                if(!listDetection->contains(robot[i]) && listDetection->size() < 10)
-                {
-                    robot[i]->transmettre(listDetection);
-                }
-            }
-    }
+                    if(!listDetection->contains(robot[i]))
+                    {
+                        robot[i]->transmettre(listDetection);
+                    }
+             }
+        }
 
 }

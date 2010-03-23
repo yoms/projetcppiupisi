@@ -8,7 +8,7 @@ void Robot::jouer()
 {
     this->plateau->deplacer( this , 1 , 1 );
     QList<Agent*> *listDetection = this->plateau->getListDetection();
-    listDetection->clear();
+    //listDetection->clear();
     if(!listDetection->contains(this))
     {
         listDetection->append(this);
@@ -17,7 +17,7 @@ void Robot::jouer()
 }
 void Robot::transmettre(QList<Agent *> *list)
 {
-    if(!list->contains(this))
+    if(!list->contains(this) && !list->isEmpty())
     {
         list->append(this);
         this->plateau->detection(list);

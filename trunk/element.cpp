@@ -5,6 +5,7 @@ Element::Element(int x, int y):x(x),y(y)
 {
     this->agent = NULL;
     this->feu = NULL;
+    this->eteind = false;
 }
 char* Element::getContenue(){
     if(agent != NULL) return agent->className();
@@ -25,7 +26,7 @@ bool Element::setAgent(Agent* agent)
 
 bool Element::setFeu(Feu *feu)
 {
-    if((feu != NULL) && (this->feu == NULL))
+    if((feu != NULL) && (this->feu == NULL) && !this->eteind)
     {
         this->feu = feu;
         this->feu->lier(this);
@@ -47,6 +48,7 @@ void Element::delAgent()
 
 void Element::delFeu()
 {
+    this->eteind = true;
     if(this->feu != NULL)
         this->feu = NULL;
 }

@@ -5,15 +5,14 @@ Drone::Drone(Plateau *plateau):Secours(plateau)
 {
     this->posXCourante = -2;
     this->posYCourante = -2;
-    this->vision = 2;
+    this->vision = 3;
 }
 
 void Drone::jouer()
 {
-    QList<Agent*> *listDetection = new QList<Agent*>;
 
-    std::cout<<"Pos X :"<<this->getPosX()<<std::endl;
-    std::cout<<"Pos Y :"<<this->getPosY()<<std::endl;
+
+
     if(this->getPosX()+this->posXCourante >= 0)
     {
        if( !this->plateau->deplacer(this,this->posXCourante,0) )
@@ -29,13 +28,31 @@ void Drone::jouer()
     }
     else if(this->getPosY()-1 >= 0)
     {
+        this->posXCourante = -2;
+        this->posYCourante = -2;
         for(int i = 1;  !this->plateau->deplacer(this,this->plateau->getNBLigne()-this->getPosX()-i,-1); i++);
     }
     else
     {
-        this->plateau->deplacer(this,this->plateau->getNBLigne()-this->getPosX()-1,this->plateau->getNBColone()-1);
-        std::cout<<"coucou3"<<std::endl;
+        this->posXCourante = -2;
+        this->posYCourante = -2;
+        for(int i = 1; !this->plateau->deplacer(this,this->plateau->getNBLigne()-this->getPosX()-i,this->plateau->getNBColone()-1); i++);
     }
-    //this->plateau->detection(listDetection);
+    QList<Agent*> *listDetection = this->plateau->getListDetection();
+    //listDetection->clear();
+    if(!listDetection->contains(this))
+    {
+        listDetection->append(this);
+        this->plateau->detection(listDetection);
+    }
 }
 
+
+void Drone::transmettre(QList<Agent *> *list)
+{
+    if(!list->contains(this) && !list->isEmpty())
+    {
+        list->append(this);
+        this->plateau->detection(list);
+    }
+}
