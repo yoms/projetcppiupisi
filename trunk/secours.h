@@ -7,7 +7,8 @@ class Secours : public Agent
 public:
     Secours(Plateau* plateau):Agent(plateau){}
     virtual void jouer() = 0;
-    virtual char* className(){ return "Secour"; }
+    virtual char* className(){ return "Secours"; }
+    Element* getCapteurPlusProche();
 };
 
 #endif // SECOUR_H

@@ -16,8 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->plateau = new Plateau;
-
+    this->plateau = new Plateau(10,10);
 
     //---------------------------------------------------------------
     //Creation de la grille
@@ -54,9 +53,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     this->setGrille();
-    QTimer *timer = new QTimer(this);
+    /*QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(jouer()));
-    timer->start(200);
+    timer->start(200);*/
     connect(this->ui->pushButton, SIGNAL(clicked()), this, SLOT(jouer()));
 
 
@@ -125,7 +124,7 @@ void MainWindow::setGrille()
             {
                 this->element[i][j].setPixmap(QPixmap(IMAGE_VICTIME));
             }
-            else this->element[i][j].setText(this->plateau->getElement(i,j)->getContenue());
+            else this->element[i][j].setText(QString(i+48)+QString("-")+QString(j+48));
 
         }
     for(int i = 0; i < this->plateau->getNBLigne(); i++)
@@ -160,7 +159,7 @@ void MainWindow::setGrille()
             {
                 this->elementVue[i][j].setPixmap(QPixmap(IMAGE_VICTIME));
             }
-            else this->elementVue[i][j].setText(this->plateau->getElementVue(i,j)->getContenue());
+            else this->elementVue[i][j].setText(QString(i+48)+QString("-")+QString(j+48));
 
         }
 }
