@@ -2,7 +2,7 @@
 
 Capteur::Capteur(Plateau *plateau):Secours(plateau)
 {
-    this->vision = 2;
+    this->vision = 3;
 }
 
 void Capteur::jouer()

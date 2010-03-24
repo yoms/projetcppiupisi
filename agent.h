@@ -4,6 +4,8 @@ class Agent;
 
 #include "plateau.h"
 #include "element.h"
+#include "math.h"
+
 class Agent
 {
 protected:
@@ -20,6 +22,8 @@ public:
     virtual char* className(){return "Agent";}
     virtual void delAgent();
     virtual void transmettre(QList <Agent*> *)= 0;
+    int distance(int x1,int x2,int y1,int y2){return (int)(sqrt( ((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1))));}
+    Element* getPompierPlusProche();
 };
 
 #endif // AGENT_H

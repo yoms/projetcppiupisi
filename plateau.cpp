@@ -49,8 +49,7 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
         }
 
     //---------------------------------------------------------------
-
-    qsrand((int)this->grille);
+    qsrand((unsigned int)&this->forceVent);
     for(int i = 0; i < NB_FEU; i++)
     {
         this->listFeu.append(Feu(this));
@@ -66,11 +65,6 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
         this->listAgent.append(new Capteur(this));
         while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
-    for(int i = 0; i < NB_ROBOT; i++)
-    {
-        this->listAgent.append(new Robot(this));
-        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
-    }
     for(int i = 0; i < NB_VICTIME; i++)
     {
         this->listAgent.append(new Victime(this/*, qrand()%2 == 0? VALIDE:BLESSER*/));
@@ -79,6 +73,11 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
     for(int i = 0; i < NB_POMPIER; i++)
     {
         this->listAgent.append(new Pompier(this));
+        while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
+    }
+    for(int i = 0; i < NB_ROBOT; i++)
+    {
+        this->listAgent.append(new Robot(this));
         while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
 
@@ -107,10 +106,12 @@ void Plateau::jouer()
     QList<Feu*> tmpFeu;
     for(int i = 0; i < this->listFeu.size(); i++) tmpFeu.append(&listFeu[i]);
     for(int i = 0; i < tmpFeu.size(); i++)
-        listFeu[i].jouer();
+        tmpFeu[i]->jouer();
 
-    for(int i = 0; i < listAgent.size(); i++)
-        listAgent[i]->jouer();
+    QList<Agent*> tmpAgent;
+    for(int i = 0; i < this->listAgent.size(); i++) tmpAgent.append(listAgent[i]);
+    for(int i = 0; i < tmpAgent.size(); i++)
+        tmpAgent[i]->jouer();
 }
 Element* Plateau::getElement(int x, int y)
 {
@@ -231,8 +232,6 @@ void Plateau::detection(QList<Agent*> *listDetection)
     QList<Agent*> antenne;
     QList<Agent*> drone;
     QList<Agent*> robot;
-    for(int i = 0; i < listDetection->size(); i++)
-        std::cout<< listDetection->at(i)->className() <<" : "<<listDetection->at(i)<<" size: "<<i <<std::endl;
     //Detection contour elementCourant
     //si antenne disponible => on transmet a antenne
     //sinon on regarde si ya un robot ou un drone

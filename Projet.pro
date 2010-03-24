@@ -18,7 +18,8 @@ SOURCES += main.cpp \
     drone.cpp \
     victime.cpp \
     pompier.cpp \
-    pda.cpp
+    pda.cpp \
+    secours.cpp
 HEADERS += plateau.h \
     element.h \
     agent.h \
