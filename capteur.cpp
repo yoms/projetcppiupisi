@@ -3,6 +3,7 @@
 Capteur::Capteur(Plateau *plateau):Secours(plateau)
 {
     this->vision = 3;
+    this->choisi = false;
 }
 
 void Capteur::jouer()
@@ -41,4 +42,15 @@ void  Capteur::transmettre(QList<Agent*>* list)
         }
     }
     this->plateau->getListDetection()->clear();
+}
+
+bool Capteur::getChoisiCapteur()
+{
+    if(!this->choisi)
+    {
+        this->choisi = true;
+        return false;
+    }
+    else
+        return true;
 }

@@ -4,6 +4,8 @@
 
 class Capteur : public Secours
 {
+private:
+    bool choisi;
 public:
     Capteur(Plateau* plateau);
     void jouer();
@@ -11,6 +13,7 @@ public:
     void feu(int x,int y ){}
     char* className(){ return "Capteur"; }
     void transmettre(QList<Agent *> *);
+    bool getChoisiCapteur();
 };
 
 #endif // CAPTEUR_H
