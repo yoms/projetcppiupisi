@@ -1,15 +1,12 @@
 #ifndef PLATEAU_H
 #define PLATEAU_H
 #include <QList>
+#include "math.h"
 class Plateau;
 enum Direction { EST, OUEST, NORD, SUD};
 #include "element.h"
 #include "agent.h"
 #include "feu.h"
-struct Point{
-    int x;
-    int y;
-};
 
 class Plateau
 {
@@ -30,6 +27,8 @@ public:
     void jouer();
     bool deplacer( Agent*, int x, int y );
     bool deplacer( Feu* );
+    static int distance(int x1,int x2,int y1,int y2){return (int)(sqrt( ((x2-x1) * (x2-x1)) + ((y2-y1) * (y2-y1))));}
+    static int distance(Agent* agent1,Agent* agent2);
 
     Element* getElement(int x, int y);
     Element* getElementVue(int x, int y);

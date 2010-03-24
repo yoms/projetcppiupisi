@@ -17,9 +17,9 @@ Element* PDA::getFeuPlusProche()
             {
                 if(grille[i+this->getPosX()][j+this->getPosY()].getFeu() != NULL)
                 {
-                    if( distance > this->distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY()) )
+                    if( distance > Plateau::distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY()) )
                     {
-                        distance = this->distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY());
+                        distance = Plateau::distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY());
                         feuPlusProche = &grille[i+this->getPosX()][j+this->getPosY()];
                     }
                 }
@@ -34,9 +34,9 @@ Element* PDA::getFeuPlusProche()
             for(int j = 0; j < this->plateau->getNBColone(); j++)
                 if(grille[i][j].getFeu() != NULL)
                 {
-                    if( distance > this->distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY()) )
+                    if( distance > Plateau::distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY()) )
                     {
-                        distance = this->distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY());
+                        distance = Plateau::distance(this->getPosX(),i+this->getPosX(),this->getPosY(),j+this->getPosY());
                         feuPlusProche = &grille[i][j];
                     }
                 }

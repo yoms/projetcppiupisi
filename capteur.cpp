@@ -1,4 +1,5 @@
 #include "capteur.h"
+#include <iostream>
 
 Capteur::Capteur(Plateau *plateau):Secours(plateau)
 {
@@ -26,6 +27,7 @@ void  Capteur::transmettre(QList<Agent*>* list)
 {
     for(int i = 0; i < list->size(); i++)
     {
+        std::cout<<"affiche de "<<list->at(i)->className()<<std::endl;
         Agent* agent = list->at(i);
         int vision = agent->getVision();
         for(int j = -vision; j < vision; j++)

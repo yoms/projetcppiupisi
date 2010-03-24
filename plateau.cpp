@@ -47,7 +47,13 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
             this->grilleVue[i][j].setX(i);
             this->grilleVue[i][j].setY(j);
         }
-
+    this->listAgent.append(new Capteur(this));
+    while(!this->grille[0][0].setAgent(this->listAgent.last()));
+    this->listAgent.append(new Robot(this));
+    while(!this->grille[2][2].setAgent(this->listAgent.last()));
+    this->listAgent.append(new Pompier(this));
+    while(!this->grille[4][0].setAgent(this->listAgent.last()));
+/*
     //---------------------------------------------------------------
     qsrand((unsigned int)&this->forceVent);
     for(int i = 0; i < NB_FEU; i++)
@@ -67,7 +73,7 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
     }
     for(int i = 0; i < NB_VICTIME; i++)
     {
-        this->listAgent.append(new Victime(this/*, qrand()%2 == 0? VALIDE:BLESSER*/));
+        this->listAgent.append(new Victime(this, qrand()%2 == 0? VALIDE:BLESSER));
         while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
     for(int i = 0; i < NB_POMPIER; i++)
@@ -80,7 +86,7 @@ Plateau::Plateau(int x, int y):nbLigne(y), nbColone(x)
         this->listAgent.append(new Robot(this));
         while(!this->grille[qrand()%this->nbLigne][qrand()%this->nbColone].setAgent(this->listAgent.last()));
     }
-
+*/
 
 }
 
@@ -236,28 +242,30 @@ void Plateau::detection(QList<Agent*> *listDetection)
     //si antenne disponible => on transmet a antenne
     //sinon on regarde si ya un robot ou un drone
     QString string1, string2;
-    for(int i=x-vision;i<=x+vision;i++)
+    for(int i=0;i<this->nbLigne;i++)
     {
-        for(int j=y-vision;j<=y+vision;j++)
+        for(int j=0;j<this->nbColone;j++)
         {
-            if(i>=0 && j>=0 && i<this->nbLigne && j<this->nbColone && (i != x || j != y))
-            {
-                if(this->getElement(i,j)->getAgent() != NULL)
+           if(this->getElement(i,j)->getAgent() != NULL)
+           {
+                Agent* agentTrouver = this->getElement(i,j)->getAgent();
+                if((string1 = agentTrouver->className()) == (string2 = "Capteur"))
                 {
-                    if((string1 = this->getElement(i,j)->getContenue()) == (string2 = "Capteur"))
-                    {
-                        antenne.append(this->getElement(i,j)->getAgent());
-                    }
-                    else if((string1 = this->getElement(i,j)->getContenue()) == (string2 = "Drone"))
-                    {
-                        drone.append(this->getElement(i,j)->getAgent());
-                    }
-                    else if((string1 = this->getElement(i,j)->getContenue()) == (string2 = "Robot"))
-                    {
-                        robot.append(this->getElement(i,j)->getAgent());
-                    }
+                    if(distance(agent,agentTrouver) <= agentTrouver->getVision())
+                        antenne.append(agentTrouver);
+                }
+                else if((string1 = agentTrouver->className()) == (string2 = "Drone"))
+                {
+                    if(distance(agent,agentTrouver) <= agentTrouver->getVision())
+                        drone.append(agentTrouver);
+                }
+                else if((string1 = agentTrouver->className()) == (string2 = "Robot"))
+                {
+                    if(distance(agent,agentTrouver) <= agentTrouver->getVision())
+                        robot.append(agentTrouver);
                 }
             }
+
         }
     }
     //transmission a un drone
@@ -283,6 +291,10 @@ void Plateau::detection(QList<Agent*> *listDetection)
                         robot[i]->transmettre(listDetection);
                     }
              }
-        }
-
+        this->listDetection.clear();
+    }
+}
+int Plateau::distance(Agent *agent1, Agent *agent2)
+{
+    return Plateau::distance(agent1->getPosX(), agent2->getPosX(), agent1->getPosY(), agent2->getPosY());
 }

@@ -34,9 +34,9 @@ Element* Agent::getPompierPlusProche()
             {                
                 if((i<(this->getPosX()-this->vision) || i>(this->getPosX()+this->vision)) && (j<(this->getPosY()-this->vision) || j>(this->getPosY()+this->vision)))
                 {
-                    if(distance > this->distance(this->getPosX(),i,this->getPosY(),j))
+                    if(distance > Plateau::distance(this->getPosX(),i,this->getPosY(),j))
                     {
-                        distance = this->distance(this->getPosX(),i,this->getPosY(),j);
+                        distance = Plateau::distance(this->getPosX(),i,this->getPosY(),j);
                         std::cout<<"pompier : "<<i<<'-'<<j<<"   distance = "<<distance<<std::endl;
                         capteurPlusProche = &grille[i][j];
                     }
