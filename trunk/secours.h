@@ -9,6 +9,7 @@ public:
     virtual void jouer() = 0;
     virtual char* className(){ return "Secours"; }
     Element* getCapteurPlusProche();
+    int zoneRobot(Agent*);
 };
 
 #endif // SECOUR_H
